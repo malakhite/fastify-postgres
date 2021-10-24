@@ -1,31 +1,32 @@
 {
-  "name": "fastify-sequelize",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "scripts": {
-    "start:dev": "tsnd --respawn src/index.ts",
-    "test": "jest"
-  },
-  "author": "Scott Abbey",
-  "license": "MIT",
-  "devDependencies": {
-    "@tsconfig/node14": "^1.0.1",
-    "@types/node": "^16.11.3",
-    "prettier": "^2.4.1",
-    "ts-node": "^10.3.1",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.4.4"
-  },
-  "dependencies": {
-    "@types/pg": "^8.6.1",
-    "awilix": "^5.0.1",
-    "dotenv": "^10.0.0",
-    "fastify": "^3.22.1",
-    "fastify-autoload": "^3.9.0",
-    "fastify-awilix": "^1.2.0",
-    "fastify-postgres": "^3.6.0",
-    "pg": "^8.7.1",
-    "pino": "^7.0.3"
-  }
+	"name": "fastify-sequelize",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"init:db": "ts-node src/db/init.ts",
+		"start:dev": "tsnd --respawn src/index.ts",
+		"test": "jest"
+	},
+	"author": "Scott Abbey",
+	"license": "MIT",
+	"devDependencies": {
+		"@tsconfig/node14": "^1.0.1",
+		"@types/node": "^16.11.3",
+		"prettier": "^2.4.1",
+		"ts-node": "^10.3.1",
+		"ts-node-dev": "^1.1.8",
+		"typescript": "^4.4.4"
+	},
+	"dependencies": {
+		"@types/pg": "^8.6.1",
+		"awilix": "^5.0.1",
+		"dotenv": "^10.0.0",
+		"fastify": "^3.22.1",
+		"fastify-autoload": "^3.9.0",
+		"fastify-awilix": "^1.2.0",
+		"fastify-postgres": "^3.6.0",
+		"pg": "^8.7.1",
+		"pino": "^7.0.3"
+	}
 }

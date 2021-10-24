@@ -1,6 +1,17 @@
 import { basename } from 'path';
-import type { FastifySchema, RouteHandler, RouteOptions } from 'fastify';
+import type {
+	FastifyInstance,
+	FastifySchema,
+	RouteHandler,
+	RouteOptions,
+} from 'fastify';
 import { Controller } from '../../common/Controller';
+import { UsersService } from './users.service';
+
+interface UsersControllerOptions {
+	instance: FastifyInstance;
+	usersService: UsersService;
+}
 
 const tempSchema: FastifySchema = {
 	response: {
@@ -25,16 +36,25 @@ const tempHandler: RouteHandler = async (request, reply) => {
 };
 
 export class UsersController extends Controller {
+	private usersService: UsersService;
+
 	protected prefix: string = __dirname.includes('routes')
 		? `/${basename(__dirname)}`
 		: '';
+
+	constructor({ instance, usersService }: UsersControllerOptions) {
+		super({ instance });
+		this.usersService = usersService;
+	}
 
 	protected routes: RouteOptions[] = [
 		{
 			method: 'GET',
 			url: '/',
 			schema: tempSchema,
-			handler: tempHandler,
+			handler: async (request, reply) => {
+				return await this.usersService.findAllUsers();
+			},
 		},
 	];
 }

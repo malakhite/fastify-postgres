@@ -9,7 +9,8 @@ services:
       - 5432:5432
     restart: always
     volumes:
-      - "fstpg:/var/lib/postgresql/data"
+      - 'fstpg:/var/lib/postgresql/data'
+    # command: ["postgres", "-c", "log_statement=all"]
 
 volumes:
   fstpg:
