@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import { PostgresDb } from 'fastify-postgres';
 import { User } from './users.model';
 
 interface IUsersRepositoryOptions {
@@ -10,15 +11,16 @@ export interface IUsersRepository {
 	findAllUsers(): Promise<User[]>;
 }
 
-export class UsersRepository implements IUsersRepository {
-	private instance: FastifyInstance;
+export default class UsersRepository {
+	// private instance: FastifyInstance;
+	private db: PostgresDb;
 
-	constructor({ instance }: IUsersRepositoryOptions) {
-		this.instance = instance;
+	constructor({ db }) {
+		this.db = db;
 	}
 
 	public async findUserById(id: string) {
-		const client = await this.instance.pg.connect();
+		const client = await this.db.connect();
 		const result = await client.query<User>(
 			'SELECT * FROM users WHERE id = $1',
 			[id],
@@ -28,7 +30,7 @@ export class UsersRepository implements IUsersRepository {
 	}
 
 	public async findUserByEmail(email: string) {
-		const client = await this.instance.pg.connect();
+		const client = await this.db.connect();
 		const result = await client.query<User>(
 			'SELECT * FROM users WHERE email = $1',
 			[email],
@@ -38,7 +40,7 @@ export class UsersRepository implements IUsersRepository {
 	}
 
 	public async findAllUsers() {
-		const client = await this.instance.pg.connect();
+		const client = await this.db.connect();
 		const result = await client.query<User>(
 			'SELECT * FROM users WHERE active = true',
 		);

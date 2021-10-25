@@ -1,10 +1,10 @@
-import { UsersRepository } from './users.repository';
+import UsersRepository from './users.repository';
 
 interface UsersServiceOptions {
 	usersRepository: UsersRepository;
 }
 
-export class UsersService {
+export default class UsersService {
 	private usersRepository: UsersRepository;
 
 	constructor({ usersRepository }: UsersServiceOptions) {

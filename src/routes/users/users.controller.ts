@@ -5,8 +5,9 @@ import type {
 	RouteHandler,
 	RouteOptions,
 } from 'fastify';
-import { Controller } from '../../common/Controller';
-import { UsersService } from './users.service';
+
+import Controller from '../../common/Controller';
+import type UsersService from './users.service';
 
 interface UsersControllerOptions {
 	instance: FastifyInstance;
@@ -35,7 +36,7 @@ const tempHandler: RouteHandler = async (request, reply) => {
 	};
 };
 
-export class UsersController extends Controller {
+export default class UsersController extends Controller {
 	private usersService: UsersService;
 
 	protected prefix: string = __dirname.includes('routes')

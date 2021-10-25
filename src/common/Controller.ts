@@ -5,7 +5,7 @@ export interface IControllerOpts {
 	instance: FastifyInstance;
 }
 
-export abstract class Controller {
+export default abstract class Controller {
 	protected instance: FastifyInstance;
 	protected abstract prefix: string;
 	protected abstract routes: RouteOptions[];

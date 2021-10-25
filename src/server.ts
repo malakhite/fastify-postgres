@@ -1,7 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import autoLoad from 'fastify-autoload';
 import fastifyPostgres from 'fastify-postgres';
-import path from 'path';
+import { join } from 'path';
 import { ClientConfig } from 'pg';
 
 export default class Server {
@@ -15,21 +15,18 @@ export default class Server {
 			: 5432,
 		user: process.env.POSTGRES_USER,
 	};
+	private port = process.env.PORT || 3000;
 
 	constructor() {
 		this.instance = fastify({ logger: true });
-	}
 
-	public bootstrap() {
 		this.instance.register(fastifyPostgres, this.pgOptions);
-		this.instance.register(autoLoad, {
-			dir: path.join(__dirname, 'routes'),
-		});
-		return this;
-	}
 
-	public listen(port: number | string) {
-		this.instance.listen(port, (err) => {
+		this.instance.register(autoLoad, {
+			dir: join(__dirname, 'routes'),
+		});
+
+		this.instance.listen(this.port, (err) => {
 			if (err) {
 				this.instance.log.error(err);
 				process.exit(1);
