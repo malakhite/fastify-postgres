@@ -1,5 +1,3 @@
-import Model from '../../common/Model';
-
 export class UserMeta {
 	id!: string;
 	user_id!: string;
@@ -7,11 +5,14 @@ export class UserMeta {
 	meta_data!: string;
 }
 
-export class User extends Model {
+export class User {
 	id!: string;
 	email!: string;
 	name!: string;
 	password!: string;
 	active!: boolean;
 	meta?: UserMeta[];
+	created_date!: Date;
+	modified_date!: Date | null;
+	deleted_date!: Date | null;
 }

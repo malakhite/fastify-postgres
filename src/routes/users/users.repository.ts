@@ -1,41 +1,24 @@
 import { FastifyInstance } from 'fastify';
-import { PostgresDb } from 'fastify-postgres';
 import { User } from './users.model';
 
-interface IUsersRepositoryOptions {
-	db: PostgresDb;
-}
 export interface IUsersRepository {
-	findUserById(id: string): Promise<User>;
-	findUserByEmail(email: string): Promise<User>;
-	findAllUsers(): Promise<User[]>;
+	findAll: () => Promise<User[]>;
 }
 
-interface Find {
-	column: 'id' | 'email';
-	predicate: string;
-	active?: boolean;
-}
+const usersRepository: (
+	instance: FastifyInstance,
+) => Promise<IUsersRepository> = async (instance) => {
+	const pool = instance.pg.pool;
 
-export default class UsersRepository {
-	private db: PostgresDb;
-
-	constructor({ db }: IUsersRepositoryOptions) {
-		this.db = db;
-	}
-
-	public async find(findObject?: Find): Promise<User[]> {
-		if (findObject) {
-			const { active = true, column, predicate } = findObject;
-			const { rows } = await this.db.query(
-				`SELECT * FROM users WHERE active = $1 AND ${column} = $2;`,
-				[active, predicate],
+	return {
+		findAll: async () => {
+			const { rows } = await pool.query<User>(
+				'SELECT * FROM users WHERE active = true;',
 			);
+			console.log(rows);
 			return rows;
-		}
-		const { rows } = await this.db.query(
-			'SELECT * FROM users WHERE active = true;',
-		);
-		return rows;
-	}
-}
+		},
+	};
+};
+
+export default usersRepository;

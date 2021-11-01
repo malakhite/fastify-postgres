@@ -1,4 +1,4 @@
 import './lib/env';
-import Server from './server';
+import server from './server';
 
-new Server();
+server();

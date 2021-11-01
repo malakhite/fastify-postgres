@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "dist/index.js",
 	"scripts": {
+		"lint:types": "tsc --noEmit",
 		"init:db": "ts-node src/db/init.ts",
 		"start:dev": "tsnd --respawn src/index.ts",
 		"test": "jest"
